@@ -1,0 +1,12 @@
+/*
+Theme Name: SaaSSkul Child Standard
+Template: saasskul-core
+Author: Fazal Shahid Latif
+Description: Standard child theme for SaaSSkul Core.
+Version: 1.0.0
+*/
+
+/* Custom Branding for Child Theme */
+header {
+    background: linear-gradient(135deg, #0073aa 0%, #00a0d2 100%);
+}

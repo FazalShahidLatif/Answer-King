@@ -1,0 +1,30 @@
+/*
+Theme Name: SaaSSkul Core
+Theme URI: https://saasskul.com
+Author: Fazal Shahid Latif
+Author URI: https://saasskul.com
+Description: High-performance parent theme for the SaaSSkul Ecosystem.
+Version: 1.0.0
+License: MIT
+Text Domain: saasskul-core
+*/
+
+/* Reset and Core Styling */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+header {
+    background: linear-gradient(135deg, #1a1a1a 0%, #333 100%);
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
