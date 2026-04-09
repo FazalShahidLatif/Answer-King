@@ -1,0 +1,21 @@
+{
+  "name": "answer-king",
+  "version": "1.0.0",
+  "description": "Premium local-first keyword research ecosystem and SaaSSkul SaaS Framework.",
+  "main": "index.js",
+  "scripts": {
+    "start": "wp-scripts start",
+    "build": "wp-scripts build",
+    "lint:js": "wp-scripts lint-js",
+    "test:js": "wp-scripts test-unit-js"
+  },
+  "author": "Fazal Shahid Latif",
+  "license": "MIT",
+  "dependencies": {
+    "@wordpress/components": "^26.0.0",
+    "@wordpress/element": "^6.0.0",
+    "@wordpress/scripts": "^26.0.0",
+    "d3": "^7.8.5",
+    "lucide-react": "^0.284.0"
+  }
+}
