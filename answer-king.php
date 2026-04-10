@@ -75,6 +75,7 @@ final class Answer_King {
 		// Tool Core
 		require_once AK_PLUGIN_DIR . 'includes/tool/class-ak-keyword-engine.php';
 		require_once AK_PLUGIN_DIR . 'includes/tool/class-ak-repository.php';
+		require_once AK_PLUGIN_DIR . 'includes/tool/class-ak-content-bridge.php';
 	}
 
 	/**
@@ -107,6 +108,11 @@ final class Answer_King {
 		// Initialize Repository
 		if ( class_exists( 'AK_Repository' ) ) {
 			AK_Repository::get_instance();
+		}
+
+		// Initialize Content Bridge
+		if ( class_exists( 'AK_Content_Bridge' ) ) {
+			AK_Content_Bridge::get_instance();
 		}
 
 		// Initialize Keyword Engine (REST Routes)

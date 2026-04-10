@@ -9,6 +9,7 @@ const App = () => {
     const [clients, setClients] = useState([]);
     const [selectedClient, setSelectedClient] = useState('');
     const [isSaving, setIsSaving] = useState(false);
+    const [isGenerating, setIsGenerating] = useState(false);
 
     useEffect(() => {
         // Fetch clients on mount
@@ -63,6 +64,31 @@ const App = () => {
         }
     };
 
+    const handleGenerateContent = async () => {
+        if (!results || !keyword) return;
+
+        setIsGenerating(true);
+        try {
+            const response = await fetch('/wp-json/answer-king/v1/generate-content', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    keyword: keyword,
+                    selectedNodes: Object.values(results).flat() // Send all phrases as context
+                })
+            });
+            const resData = await response.json();
+            if (resData.success) {
+                alert(`Content Draft Created! Redirecting to editor...`);
+                window.open(resData.url, '_blank');
+            }
+        } catch (error) {
+            console.error('Generation failed:', error);
+        } finally {
+            setIsGenerating(false);
+        }
+    };
+
     return (
         <div className="ak-app-container">
             <div className="ak-header">
@@ -86,11 +112,16 @@ const App = () => {
                 </div>
             </div>
 
-            <div className="ak-toolbar" style={{ marginBottom: '15px', display: 'flex', justifyContent: 'flex-end' }}>
+            <div className="ak-toolbar" style={{ marginBottom: '15px', display: 'flex', justifyContent: 'flex-end', gap: '10px' }}>
                 {results && (
-                    <Button isSecondary onClick={handleSave} disabled={isSaving}>
-                        {isSaving ? <Spinner /> : 'Save Map to Repository'}
-                    </Button>
+                    <>
+                        <Button isSecondary onClick={handleSave} disabled={isSaving}>
+                            {isSaving ? <Spinner /> : 'Save Map to Repository'}
+                        </Button>
+                        <Button isSecondary onClick={handleGenerateContent} disabled={isGenerating}>
+                            {isGenerating ? <Spinner /> : '🚀 Generate Content Bridge'}
+                        </Button>
+                    </>
                 )}
             </div>
 
