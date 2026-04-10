@@ -9,6 +9,33 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 class AK_Keyword_Engine {
 
+	public function __construct() {
+		add_action( 'rest_api_init', array( $this, 'register_routes' ) );
+	}
+
+	/**
+	 * Register REST API routes
+	 */
+	public function register_routes() {
+		register_rest_route( 'answer-king/v1', '/research', array(
+			'methods'             => 'GET',
+			'callback'            => array( $this, 'get_research_results' ),
+			'permission_callback' => '__return_true', // In production, add capability check
+		) );
+	}
+
+	/**
+	 * REST API Callback
+	 */
+	public function get_research_results( $request ) {
+		$keyword = $request->get_param( 'q' );
+		if ( empty( $keyword ) ) {
+			return new WP_Error( 'no_keyword', 'Search query is required', array( 'status' => 400 ) );
+		}
+
+		return self::fetch_suggestions( $keyword );
+	}
+
 	/**
 	 * Fetch suggestions from Google Autocomplete
 	 */

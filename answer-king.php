@@ -64,7 +64,9 @@ final class Answer_King {
 		// Foundation Engine
 		require_once AK_PLUGIN_DIR . 'includes/manager/class-ak-licensing.php';
 		require_once AK_PLUGIN_DIR . 'includes/manager/class-ak-roles.php';
+		require_once AK_PLUGIN_DIR . 'includes/manager/class-ak-client-manager.php';
 		require_once AK_PLUGIN_DIR . 'includes/admin/class-ak-settings.php';
+		require_once AK_PLUGIN_DIR . 'includes/admin/class-ak-tool.php';
 		
 		// Legal & Trust
 		require_once AK_PLUGIN_DIR . 'includes/legal/class-ak-gdpr.php';
@@ -72,6 +74,7 @@ final class Answer_King {
 		
 		// Tool Core
 		require_once AK_PLUGIN_DIR . 'includes/tool/class-ak-keyword-engine.php';
+		require_once AK_PLUGIN_DIR . 'includes/tool/class-ak-repository.php';
 	}
 
 	/**
@@ -89,6 +92,26 @@ final class Answer_King {
 		// Fire off the licensing engine
 		if ( class_exists( 'AK_Licensing' ) ) {
 			AK_Licensing::get_instance();
+		}
+
+		// Initialize Tool UI
+		if ( class_exists( 'AK_Tool_Page' ) ) {
+			AK_Tool_Page::get_instance();
+		}
+
+		// Initialize Client Manager
+		if ( class_exists( 'AK_Client_Manager' ) ) {
+			AK_Client_Manager::get_instance();
+		}
+
+		// Initialize Repository
+		if ( class_exists( 'AK_Repository' ) ) {
+			AK_Repository::get_instance();
+		}
+
+		// Initialize Keyword Engine (REST Routes)
+		if ( class_exists( 'AK_Keyword_Engine' ) ) {
+			new AK_Keyword_Engine();
 		}
 	}
 

@@ -16,7 +16,7 @@ yarn-error.log
 
 # Composer
 vendor/
-composer.lock
+# composer.lock - removed from ignore to ensure dependency consistency
 
 # Environment Variables
 .env
@@ -27,7 +27,7 @@ composer.lock
 
 # Build Assets
 dist/
-build/
+# build/ - removed from ignore to ensure plugin functionality in distributed repo
 
 # IDEs & OS
 .vscode/
