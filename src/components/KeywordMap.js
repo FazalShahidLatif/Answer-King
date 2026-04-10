@@ -12,12 +12,20 @@ const KeywordMap = ({ data, rootName }) => {
             name: rootName,
             children: Object.keys(data).map(key => ({
                 name: key.charAt(0).toUpperCase() + key.slice(1),
-                children: data[key].map(phrase => ({ name: phrase }))
+                children: data[key].map(node => ({ 
+                    name: node.name,
+                    metrics: node.metrics 
+                }))
             }))
         };
 
-        const width = 800;
+        const width = 1000;
         const radius = width / 2;
+
+        // Color scale for Difficulty (Green -> Red)
+        const colorScale = d3.scaleLinear()
+            .domain([0, 50, 100])
+            .range(['#22c55e', '#eab308', '#ef4444']);
 
         // Clear previous chart
         d3.select(svgRef.current).selectAll('*').remove();
@@ -27,7 +35,7 @@ const KeywordMap = ({ data, rootName }) => {
             .append('g');
 
         const tree = d3.tree()
-            .size([2 * Math.PI, radius - 100])
+            .size([2 * Math.PI, radius - 150])
             .separation((a, b) => (a.parent === b.parent ? 1 : 2) / a.depth);
 
         const root = tree(d3.hierarchy(hierarchyData));
@@ -35,8 +43,8 @@ const KeywordMap = ({ data, rootName }) => {
         // Links
         svg.append('g')
             .attr('fill', 'none')
-            .attr('stroke', '#0073aa')
-            .attr('stroke-opacity', 0.4)
+            .attr('stroke', '#cbd5e1')
+            .attr('stroke-opacity', 0.6)
             .attr('stroke-width', 1.5)
             .selectAll('path')
             .data(root.links())
@@ -56,8 +64,19 @@ const KeywordMap = ({ data, rootName }) => {
             `);
 
         node.append('circle')
-            .attr('fill', d => d.children ? '#0073aa' : '#999')
-            .attr('r', d => d.children ? 6 : 3);
+            .attr('fill', d => {
+                if (!d.depth) return '#0073aa'; // Root
+                if (d.data.metrics) return colorScale(d.data.metrics.difficulty);
+                return '#cbd5e1';
+            })
+            .attr('r', d => {
+                if (!d.depth) return 10;
+                if (d.data.metrics) return d3.scaleSqrt().domain([0, 15000]).range([3, 15])(d.data.metrics.volume);
+                return 5;
+            })
+            .style('cursor', 'pointer')
+            .append('title')
+            .text(d => d.data.metrics ? `Vol: ${d.data.metrics.volume}\nDiff: ${d.data.metrics.difficulty}\nCPC: $${d.data.metrics.cpc}` : d.data.name);
 
         node.append('text')
             .attr('dy', '0.31em')

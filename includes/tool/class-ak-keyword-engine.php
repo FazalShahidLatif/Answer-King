@@ -59,7 +59,7 @@ class AK_Keyword_Engine {
 	}
 
 	/**
-	 * Smart Grouping Algorithm
+	 * Smart Grouping Algorithm with SEO Metrics
 	 */
 	private static function group_results( $suggestions ) {
 		$grouped = array(
@@ -77,15 +77,28 @@ class AK_Keyword_Engine {
 
 		foreach ( $suggestions as $phrase ) {
 			$matched = false;
+			
+			// Generate Mock SEO Metrics for visualization
+			$metrics = array(
+				'volume'     => rand( 100, 15000 ),
+				'difficulty' => rand( 1, 100 ),
+				'cpc'        => (float) rand( 10, 500 ) / 100,
+			);
+
+			$node_data = array(
+				'name'    => $phrase,
+				'metrics' => $metrics,
+			);
+
 			foreach ( $patterns as $key => $pattern ) {
 				if ( preg_match( $pattern, $phrase ) ) {
-					$grouped[$key][] = $phrase;
+					$grouped[$key][] = $node_data;
 					$matched = true;
 					break;
 				}
 			}
 			if ( ! $matched ) {
-				$grouped['other'][] = $phrase;
+				$grouped['other'][] = $node_data;
 			}
 		}
 

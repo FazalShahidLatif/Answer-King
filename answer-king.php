@@ -76,6 +76,7 @@ final class Answer_King {
 		require_once AK_PLUGIN_DIR . 'includes/tool/class-ak-keyword-engine.php';
 		require_once AK_PLUGIN_DIR . 'includes/tool/class-ak-repository.php';
 		require_once AK_PLUGIN_DIR . 'includes/tool/class-ak-content-bridge.php';
+		require_once AK_PLUGIN_DIR . 'includes/tool/class-ak-seo-auditor.php';
 	}
 
 	/**

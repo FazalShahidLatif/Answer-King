@@ -48,6 +48,36 @@
     background: radial-gradient(circle, #f8f9fa 0%, #ffffff 100%);
 }
 
+.ak-audit-sidebar {
+    animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+    from { transform: translateX(50px); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+}
+
+.ak-score-circle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 120px;
+    width: 120px;
+    margin: 0 auto;
+    border-radius: 50%;
+    border: 8px solid #f1f5f9;
+}
+
+.ak-audit-item {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    transition: transform 0.2s ease;
+}
+
+.ak-audit-item:hover {
+    transform: scale(1.02);
+}
+
 .ak-stars {
     color: #f6ad55;
 }
